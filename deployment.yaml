@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service
+  name: view
   labels:
-    app: service
+    app: view
 spec:
   replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: service
+      app: view
   template:
     metadata:
       labels:
-        app: service
-        tier: service
+        app: view
+        tier: view
     spec:
       containers:
-      - name: service
-        image: 20202299/service:latest
+      - name: view
+        image: 20202299/view:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
-          name: service
+          name: view
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: service
+  name: view
   labels:
-    app: service
+    app: view
 spec:
   ports:
   - port: 80
     targetPort: 3000
   selector:
-    app: service
-    tier: service
+    app: view
+    tier: view
   type: LoadBalancer
