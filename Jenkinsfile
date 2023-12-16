@@ -15,7 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("20202299/hello:${env.BUILD_ID}")
+                    myapp = docker.build("20202299/view:${env.BUILD_ID}")
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
 				branch 'main'
 			}
             steps{
-                sh "sed -i 's/service:latest/service:${env.BUILD_ID}/g' deployment.yaml"
+                sh "sed -i 's/view:latest/view:${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
